@@ -67,27 +67,31 @@ class Generation extends React.Component {
   constructor(props) {
     super(props);
     this.cellStates = props.cellStates;
+    this.rowIndex = props.rowIndex;
   }
   render() {
     return (
-      <div>
-        {this.cellStates.map((x) => {
-          return <Cell status={x} />;
+      this.cellStates.map( (x, colIndex) => {
+          const cellStyle = {
+            gridRowStart: this.rowIndex+1,
+            rowSpan: 1,
+            gridColumnStart: colIndex+1,
+            columnSpan: 1
           }
-        )}
-      </div>
+          return <Cell style={cellStyle} status={x} />;
+        }
+      )
     );
   }
 }
 
 function Grid() {
-  const firstRow = [true].concat(Array(49).fill(false));
-
+  const genZero = [true].concat(Array(49).fill(false));
   return (
       <div className="grid">
-        {calculateCellStates(firstRow).map( (states) =>
-            <Generation cellStates={states} />
-        )}
+        {calculateCellStates(genZero).map( (states, genNumber) => {
+          return <Generation cellStates={states} rowIndex={genNumber}/>;
+        })}
       </div>
   )
 }
