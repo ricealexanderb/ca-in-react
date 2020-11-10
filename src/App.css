@@ -1,3 +1,8 @@
+.rule-selector {
+  height: 100px;
+  width: 100%;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(101, 1fr);

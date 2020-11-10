@@ -2,7 +2,17 @@ import './App.css';
 import React from "react";
 
 
-function cellRule(parentSlice) {
+class RuleSelector extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onClick = props.onClick;
+  }
+  render() {
+    return <div className="rule-selector" onClick={this.onClick}>rules interface goes here</div>;
+  }
+}
+
+function cellRuleA(parentSlice) {
     if (parentSlice[0] && parentSlice[1] && parentSlice[2]) {
       return false;
     } else if (parentSlice[0] && parentSlice[1] && !parentSlice[2]) {
@@ -22,7 +32,28 @@ function cellRule(parentSlice) {
     }
 }
 
-function calculateCellStates(state) {
+function cellRuleB(parentSlice) {
+  if (parentSlice[0] && parentSlice[1] && parentSlice[2]) {
+    return false;
+  } else if (parentSlice[0] && parentSlice[1] && !parentSlice[2]) {
+    return false;
+  } else if (parentSlice[0] && !parentSlice[1] && parentSlice[2]) {
+    return false;
+  } else if (parentSlice[0] && !parentSlice[1] && !parentSlice[2]) {
+    return true;
+  } else if (!parentSlice[0] && parentSlice[1] && parentSlice[2]) {
+    return true;
+  } else if (!parentSlice[0] && parentSlice[1] && !parentSlice[2]) {
+    return true;
+  } else if (!parentSlice[0] && !parentSlice[1] && parentSlice[2]) {
+    return true;
+  } else if (!parentSlice[0] && !parentSlice[1] && !parentSlice[2]) {
+    return false;
+  }
+}
+
+function calculateCellStates(state, cellRule) {
+  /* TODO: rename 'state' because that name is used elsewhere in React */
   const limit = 101;
   let states = [state];
   let curry = (state) => {
@@ -72,23 +103,39 @@ function Generation(props) {
   )
 }
 
-function Grid() {
+function Grid(props) {
   const halfGeneration = Array(50).fill(false);
   const firstCell = [true];
   const genZero = halfGeneration.concat(firstCell, halfGeneration);
   return (
       <div className="grid">
-        {calculateCellStates(genZero).map( (states, genNumber) => {
+        {calculateCellStates(genZero, props.cellRule).map( (states, genNumber) => {
           return <Generation cellStates={states} rowIndex={genNumber}/>;
         })}
       </div>
   )
 }
 
-function App() {
-  return (
-    <Grid />
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {cellRule: cellRuleA}
+    this.switchRules = this.switchRules.bind(this);
+  }
+
+  switchRules() {
+    window.alert("switching");
+    this.setState({cellRule: cellRuleB});
+  }
+
+  render() {
+    return (
+      <div>
+        <RuleSelector onClick={this.switchRules}/>
+        <Grid cellRule={this.state.cellRule}/>
+      </div>
+    );
+  }
 }
 
 export default App;
