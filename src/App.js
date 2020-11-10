@@ -51,38 +51,25 @@ function calculateCellStates(state) {
   return states;
 }
 
-class Cell extends React.Component {
-  constructor(props) {
-    super(props);
-    this.status = props.status;
-  }
-  render() {
-    return (
-      <div className={`cell ${this.status ? 'on' : 'off'}`}> </div>
-    )
-  }
+function Cell(props) {
+  return (
+    <div className={`cell ${props.status ? 'on' : 'off'}`}> </div>
+  )
 }
 
-class Generation extends React.Component {
-  constructor(props) {
-    super(props);
-    this.cellStates = props.cellStates;
-    this.rowIndex = props.rowIndex;
-  }
-  render() {
-    return (
-      this.cellStates.map( (x, colIndex) => {
-          const cellStyle = {
-            gridRowStart: this.rowIndex+1,
-            rowSpan: 1,
-            gridColumnStart: colIndex+1,
-            columnSpan: 1
-          }
-          return <Cell style={cellStyle} status={x} />;
+function Generation(props) {
+  return (
+    props.cellStates.map( (x, colIndex) => {
+        const cellStyle = {
+          gridRowStart: props.rowIndex+1,
+          rowSpan: 1,
+          gridColumnStart: colIndex+1,
+          columnSpan: 1
         }
-      )
-    );
-  }
+        return <Cell style={cellStyle} status={x} />;
+      }
+    )
+  )
 }
 
 function Grid() {
