@@ -86,7 +86,9 @@ class Generation extends React.Component {
 }
 
 function Grid() {
-  const genZero = [true].concat(Array(100).fill(false));
+  const halfGeneration = Array(50).fill(false);
+  const firstCell = [true];
+  const genZero = halfGeneration.concat(firstCell, halfGeneration);
   return (
       <div className="grid">
         {calculateCellStates(genZero).map( (states, genNumber) => {
