@@ -1,15 +1,14 @@
 .grid {
   display: grid;
-  grid-template-columns: repeat(50, 20px);
-  grid-template-rows: repeat(50, 20px);
-
+  grid-template-columns: repeat(101, 1fr);
+  grid-template-rows: repeat(101, 1fr);
+  background: lightgray;
+  grid-gap: 1px;
 }
 
 .cell {
-  border: 1px solid;
-  height: 20px;
-  width: 20px;
-  color: lightgray;
+  height: 0;
+  padding-top: 100%;
 }
 
 .on {

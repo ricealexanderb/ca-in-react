@@ -23,7 +23,7 @@ function cellRule(parentSlice) {
 }
 
 function calculateCellStates(state) {
-  const limit = 50;
+  const limit = 101;
   let states = [state];
   let curry = (state) => {
     if (states.length === limit) {
@@ -86,7 +86,7 @@ class Generation extends React.Component {
 }
 
 function Grid() {
-  const genZero = [true].concat(Array(49).fill(false));
+  const genZero = [true].concat(Array(100).fill(false));
   return (
       <div className="grid">
         {calculateCellStates(genZero).map( (states, genNumber) => {
