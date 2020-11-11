@@ -108,10 +108,10 @@ function calculateCellStates(state, cellRule) {
       let nextStates = [];
       for(let i = 0 ; i < state.length; i++) {
         if (i===0) {
-          const leftmostSlice = [false, state[0], state[1]];
+          const leftmostSlice = [state[state.length - 1], state[0], state[1]];
           nextStates.push(cellRule(leftmostSlice));
         } else if (i===state.length - 1) {
-          const rightmostSlice = [state[i-1], state[i], false];
+          const rightmostSlice = [state[i-1], state[i], state[0]];
           nextStates.push(cellRule(rightmostSlice));
         } else {
           const slice = state.slice(i-1, i+2);
