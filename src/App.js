@@ -1,6 +1,22 @@
 import './App.css';
 import React from "react";
 
+function SliceRule(props) {
+  const rightBit = bitmaskForBit(0) & props.sliceIndex;
+  const centerBit = bitmaskForBit(1) & props.sliceIndex;
+  const leftBit = bitmaskForBit(2) & props.sliceIndex;
+  const outputBit = bitmaskForBit(props.sliceIndex) & props.ruleNumber;
+  //const outputBit = 1;
+
+  return (
+    <div className="slice-rule">
+      <div className={`rule-cell slice-cell-left ${leftBit ? "on" : "off"}`}/>
+      <div className={`rule-cell slice-cell-center ${centerBit ? "on" : "off"}`}/>
+      <div className={`rule-cell slice-cell-right ${rightBit ? "on" : "off"}`}/>
+      <div className={`rule-cell slice-cell-output ${outputBit ? "on" : "off"}`}/>
+    </div>
+  );
+}
 
 class RuleSelector extends React.Component {
   constructor(props) {
@@ -67,6 +83,14 @@ class RuleSelector extends React.Component {
           <option value="218">218</option>
           <option value="225">225</option>
         </select>
+        <SliceRule ruleNumber={this.state.ruleNumber} sliceIndex={7}/>
+        <SliceRule ruleNumber={this.state.ruleNumber} sliceIndex={6}/>
+        <SliceRule ruleNumber={this.state.ruleNumber} sliceIndex={5}/>
+        <SliceRule ruleNumber={this.state.ruleNumber} sliceIndex={4}/>
+        <SliceRule ruleNumber={this.state.ruleNumber} sliceIndex={3}/>
+        <SliceRule ruleNumber={this.state.ruleNumber} sliceIndex={2}/>
+        <SliceRule ruleNumber={this.state.ruleNumber} sliceIndex={1}/>
+        <SliceRule ruleNumber={this.state.ruleNumber} sliceIndex={0}/>
       </div>
     );
   }
@@ -98,7 +122,7 @@ function cellRuleFromNumber(ruleNumber, parentSlice) {
 
 function calculateCellStates(state, cellRule) {
   /* TODO: rename 'state' because that name is used elsewhere in React */
-  const limit = 101;
+  const limit = 200;
   let states = [state];
   let curry = (state) => {
     if (states.length === limit) {
